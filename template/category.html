@@ -1,0 +1,79 @@
+{%extends 'base.html'%}
+
+{%block title%} WriteIt! | {{cat.title}} {%endblock%}
+
+
+{%block content%}
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+    {%for cat in cats%}
+        <li><a href="/category/{{cat.url}}">{{cat.title}}</a></li>
+    {%endfor%}
+</ul>
+<nav class="bg-primary">
+   <div class="container">
+    <div class="nav-wrapper">
+        {%load static%}
+        <a href="/"><img class="logo" src="{% static 'base/writeit.png' %}" alt="LOGO"></a>
+        <a href="/" class="brand-logo">WriteIt!</a>
+    </div>
+   </div>
+</nav>
+
+
+<style>
+    .logo{
+        width: 40px; 
+        height: 40px; 
+        margin-top: 1.2%; 
+        margin-right: 2%; 
+        border-radius: 50%;
+    }
+</style>
+<div class="container-custom">
+    <div class="row">
+        <div class="col s12 m10 ">
+            <h3>Category :- {{cat.title}}</h3>
+            <div class="row">
+                <div class="col s12">
+                    {%for p in posts%}
+                    <div class="row">
+                        <div class="col s12 m8">
+                            {{p.content | truncatewords:60 | safe}}
+                            <div class="mt20">
+                                <a href="/blog/{{p.url}}" class="btn bg-primary">Read More..</a>
+                            </div>
+                        </div>
+                        <div class="col s12 m4">
+                            <img src="/media/{{p.image}}" class="responsive-img" style="margin-top: 50px;">
+                        </div>
+                    </div>
+                    {%empty%}
+                        <h4>No Posts</h4>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m2">
+            {%for cat in cats%}
+            <div class="card item" style="margin-left: 10px;">
+                <div class="img-container">
+                    <img src="/media/{{cat.image}}" class="responsive-img" alt="">
+                </div>
+                <div class="card-content">
+                    <b>
+                        {{cat.title}}
+                    </b>
+                    <p class="truncate">{{cat.description}}</p>
+                
+                    <div class="container mt20 center-align">
+                        <a href="/category/{{cat.url}}" class="btn bg-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+{%endblock%}
